@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <vueCountryDataSelect v-model="input" width="150" height="30" mode="countryCallingCodes"></vueCountryDataSelect>
-    <vueCountryDataSelect width="300" height="30"></vueCountryDataSelect>
+    <vueCountryDataSelect width="300" height="30" placeholder="search"></vueCountryDataSelect>
     <vueCountryDataSelect width="300" height="30" mode="countryCallingCodes"></vueCountryDataSelect>
   </div>
 </template>

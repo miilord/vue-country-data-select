@@ -1,6 +1,6 @@
 <template>
   <div :class="uiClass" :style="{width: width + 'px', height: height + 'px'}">
-    <input type="text" v-model="input" placeholder="search..." @focus="active = true">
+    <input type="text" v-model="input" :placeholder="placeholder" @focus="active = true">
     <span v-if="emoji" :style="{top: height / 2 + 'px'}"> {{ emoji }} </span>
     <div class="list" :style="{minWidth: width + 'px', top: height - 1 + 'px'}">
       <p v-for="(i, index) in list" :key="index" @click="select(i)">
@@ -10,7 +10,7 @@
       </p>
       <p v-show="!list[0]"><font>No results found.</font></p>
     </div>
-    <i class="triangle" @click="active = !active" :style="{top: height / 2 + 'px'}"></i>
+    <i class="triangle" @click="clickTriangle()" :style="{top: height / 2 + 'px'}"></i>
   </div>
 </template>
 
@@ -18,12 +18,13 @@
 const countries = require('country-data').countries
 export default {
   name: 'vueCountryDataSelect',
-  props: ['value', 'mode', 'width', 'height'],
+  props: ['value', 'mode', 'width', 'height', 'placeholder'],
   data () {
     return {
       countries: [],
       input: this.value,
-      active: false
+      active: false,
+      showAll: false
     }
   },
   computed: {
@@ -37,7 +38,7 @@ export default {
       const arr = this.countries
       const input = this.input ? this.input.toLocaleUpperCase() : ''
       let list = []
-      if (!input) return arr
+      if (!input || this.showAll) return arr
 
       arr.map(x => {
         if (x.alpha2.indexOf(input) >= 0 || x.name.toLocaleUpperCase().indexOf(input) >= 0) {
@@ -65,6 +66,7 @@ export default {
   watch: {
     input: function () {
       this.$emit('input', this.input)
+      this.showAll = false
     }
   },
   mounted () {
@@ -87,6 +89,10 @@ export default {
       const m = this.mode ? this.mode : 'name'
       this.input = m === 'countryCallingCodes' ? i[m][0] : i[m]
       this.active = false
+    },
+    clickTriangle () {
+      if(!this.active) this.showAll = true
+      this.active = !this.active
     }
   },
   filters: {

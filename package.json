@@ -2,7 +2,7 @@
   "name": "vue-country-data-select",
   "description": "✨ A selector for country data, such as selecting a calling code",
   "main": "dist/vueCountryDataSelect.min.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "keywords": [
     "vue",
     "flag",
